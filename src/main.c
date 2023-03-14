@@ -4,9 +4,10 @@ sfRenderWindow *window;
 sfClock *clock;
 sfEvent event;
 
+
 void updateClock(sfClock *clock)
 {
-    printf("%f\n", sfTime_asSeconds(sfClock_getElapsedTime(clock)));
+    // printf("%f\n", sfTime_asSeconds(sfClock_getElapsedTime(clock)));
 }
 
 int main()

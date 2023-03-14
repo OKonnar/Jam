@@ -14,6 +14,9 @@ clean:
 
 $(NAME):	$(OBJ)
 
+re: fclean
+	@make -s
+
 fclean: clean
 	@rm -f $(NAME)
 

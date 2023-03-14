@@ -1,8 +1,8 @@
 #ifndef DEFINE_H
     #define DEFINE_H
 
-#define bool int
-#define true 1
-#define false 0
+extern sfRenderWindow *window;
+extern sfClock *clock;
+extern sfEvent event;
 
 #endif
