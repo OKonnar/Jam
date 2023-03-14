@@ -14,6 +14,8 @@
 #include "../include/functions.h"
 #include "../include/struct.h"
 
+#include "../lib/function.h"
+
 /*  EXTERNAL INCLUDE    */
 
 #include <stdio.h>

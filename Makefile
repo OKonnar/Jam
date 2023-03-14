@@ -6,18 +6,24 @@ OBJ		=	$(SRC:.c=.o)
 
 FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
 
-all:	$(NAME)
-		@gcc $(INC) -o $(NAME) $(OBJ) $(FLAGS)
-
-clean:
-	@rm -f $(OBJ)
-
 $(NAME):	$(OBJ)
 
-re: fclean
-	@make -s
+LIB = ./lib
+
+all:	$(NAME)
+	@make -s -C $(LIB)
+	@gcc $(INC) -o $(NAME) $(OBJ) $(FLAGS) -L$(LIB)
+
+clean:
+	@make clean -C $(LIB)
+	@rm -f $(OBJ)
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(NAME)
+
+re: fclean
+	@make -s re -C $(LIB)
+	@make -s
 
 .PHONY:	all clean fclean re
