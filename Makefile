@@ -8,19 +8,19 @@ $(NAME):	$(OBJ)
 
 FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
 
-LIB_CSFML = -L./libmy -lmy
+LIB_CSFML = -L./lib -lmy
 
 all:	$(NAME)
-	@make -s -C ./libmy
+	@make -s -C ./lib
 	@gcc -g -o $(NAME) $(OBJ) $(LIB_CSFML) $(FLAGS)
 
 clean:
 	@rm -f $(OBJ)
-	@make clean -s -C ./libmy
+	@make clean -s -C ./lib
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -s -C ./libmy
+	@make fclean -s -C ./lib
 
 re: fclean all
 

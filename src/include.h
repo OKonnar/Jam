@@ -13,7 +13,7 @@
 #include "../include/define.h"
 #include "../include/functions.h"
 #include "../include/struct.h"
-#include "../libmy/function.h"
+#include "../lib/include.h"
 
 /*  EXTERNAL INCLUDE    */
 
