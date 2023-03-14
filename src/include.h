@@ -14,6 +14,9 @@
 #include "../include/functions.h"
 #include "../include/struct.h"
 
+/*  EXTERNAL INCLUDE    */
+
 #include <stdio.h>
+#include <stdbool.h>
 
 #endif

@@ -18,6 +18,7 @@ int main()
     while(sfRenderWindow_isOpen(window)) {
         while(sfRenderWindow_pollEvent(window, &event))
         {
+            scene_viewer();
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
