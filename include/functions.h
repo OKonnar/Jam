@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_H
-    #define FUNCTIONS_H
+#ifndef FUNCTIONS
+    #define FUNCTIONS
 
 void scene_viewer();
 
