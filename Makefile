@@ -4,26 +4,24 @@ SRC		=	$(shell echo src/*.c)
 
 OBJ		=	$(SRC:.c=.o)
 
-FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
-
 $(NAME):	$(OBJ)
 
-LIB = ./lib
+FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
+
+LIB_CSFML = -L./libmy -lmy
 
 all:	$(NAME)
-	@make -s -C $(LIB)
-	@gcc $(INC) -o $(NAME) $(OBJ) $(FLAGS) -L$(LIB)
+	@make -s -C ./libmy
+	@gcc -g -o $(NAME) $(OBJ) $(LIB_CSFML) $(FLAGS)
 
 clean:
-	@make clean -C $(LIB)
 	@rm -f $(OBJ)
+	@make clean -s -C ./libmy
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm -f $(NAME)
+	@make fclean -s -C ./libmy
 
-re: fclean
-	@make -s re -C $(LIB)
-	@make -s
+re: fclean all
 
 .PHONY:	all clean fclean re
