@@ -3,11 +3,13 @@
 sfRenderWindow *window;
 sfClock *clock;
 sfEvent event;
+sounds_t *sounds;
 
 void init_game()
 {
     clock = sfClock_create();
     window = window_change(NULL, (sfVideoMode){1920, 1080, 32}, sfResize | sfClose);
+    sounds = NULL;
 }
 
 bool updateClock(sfClock *clock, int fps)
