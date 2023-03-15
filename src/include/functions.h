@@ -4,6 +4,8 @@
 #include "struct.h"
 
 void scene_viewer();
+void processEvent();
+void quit_game();
 
 void add_sound(sounds_t **sound, char *filepath, char *name);
 void play_sound(sounds_t *sound, char *name);

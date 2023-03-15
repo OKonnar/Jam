@@ -4,24 +4,31 @@ sfRenderWindow *window;
 sfClock *clock;
 sfEvent event;
 
-
-void updateClock(sfClock *clock)
+void init_game()
 {
-    printf("%f\n", sfTime_asSeconds(sfClock_getElapsedTime(clock)));
+    clock = sfClock_create();
+    window = window_change(NULL, (sfVideoMode){1920, 1080, 32}, sfResize | sfClose);
+}
+
+bool updateClock(sfClock *clock, int fps)
+{
+    static float deltaTime = 0;
+
+    if (sfTime_asSeconds(sfClock_getElapsedTime(clock)) - deltaTime > (float)1 / fps) {
+        deltaTime = sfTime_asSeconds(sfClock_getElapsedTime(clock));
+        return true;
+    }
+    return false;
 }
 
 int main()
 {
-    clock = sfClock_create();
-    window = window_change(NULL, (sfVideoMode){1920, 1080, 32}, sfResize | sfClose);
+    init_game();
 
     while(sfRenderWindow_isOpen(window)) {
-        while(sfRenderWindow_pollEvent(window, &event))
-        {
-            scene_viewer();
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
+        processEvent();
+        if (updateClock(clock, 120)) {
+
         }
-        updateClock(clock);
     }
 }

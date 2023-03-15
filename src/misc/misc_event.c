@@ -1,4 +1,10 @@
-#include "./include/functions.h"
+#include "../include/functions.h"
+
+void quit_game()
+{
+    if (event.type == sfEvtClosed || event.key.code == sfKeyEscape)
+        sfRenderWindow_close(window);
+}
 
 void scene_viewer()
 {

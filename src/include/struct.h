@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
     #define STRUCT_H
 
-#include "define.h"
+#include "macro.h"
 
 typedef struct sound_s {
     char *name;
