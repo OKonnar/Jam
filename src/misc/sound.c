@@ -1,4 +1,4 @@
-#include "include.h"
+#include "../include/functions.h"
 
 static sfSound *create_sound(char *filepath)
 {

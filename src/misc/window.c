@@ -1,4 +1,4 @@
-#include "include.h"
+#include "../include/functions.h"
 
 sfRenderWindow *window_change(sfRenderWindow *window, sfVideoMode videoMode, sfUint32 style)
 {

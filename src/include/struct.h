@@ -1,7 +1,7 @@
-#ifndef STRUCT_H_
-    #define STRUCT_H_
+#ifndef STRUCT_H
+    #define STRUCT_H
 
-#include "include_SFML.h"
+#include "define.h"
 
 typedef struct sound_s {
     char *name;

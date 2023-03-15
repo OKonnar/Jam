@@ -1,26 +1,22 @@
 NAME 	= 	game
 
-SRC		=	$(shell echo src/*.c)
+SRC		=	$(shell find -name "*.c")
 
 OBJ		=	$(SRC:.c=.o)
 
-$(NAME):	$(OBJ)
 
 FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
 
-LIB_CSFML = -L./lib -lmy
-
 all:	$(NAME)
-	@make -s -C ./lib
-	@gcc -g -o $(NAME) $(OBJ) $(LIB_CSFML) $(FLAGS)
+	gcc -g -o $(NAME) $(OBJ) $(FLAGS)
+
+$(NAME):	$(OBJ)
 
 clean:
-	@rm -f $(OBJ)
-	@make clean -s -C ./lib
+	rm -f $(OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
-	@make fclean -s -C ./lib
+	rm -f $(NAME)
 
 re: fclean all
 

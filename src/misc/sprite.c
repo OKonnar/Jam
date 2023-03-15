@@ -1,4 +1,4 @@
-#include "include.h"
+#include "../include/functions.h"
 
 void sfSprite_setPosition_relative(sfSprite **sprite , sfVector2f new_pos)
 {
