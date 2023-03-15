@@ -12,10 +12,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "struct.h"
+
 #define NAME "game"
 
 extern sfRenderWindow *window;
 extern sfClock *clock;
 extern sfEvent event;
+extern sounds_t *sounds;
 
 #endif

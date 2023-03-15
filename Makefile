@@ -4,19 +4,18 @@ SRC		=	$(shell find -name "*.c")
 
 OBJ		=	$(SRC:.c=.o)
 
-
-FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
+FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lopenal -lm
 
 all:	$(NAME)
-	gcc -g -o $(NAME) $(OBJ) $(FLAGS)
+	@gcc -s -g -o $(NAME) $(OBJ) $(FLAGS)
 
 $(NAME):	$(OBJ)
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
