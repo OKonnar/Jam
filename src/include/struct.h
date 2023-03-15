@@ -4,8 +4,12 @@
 typedef struct sound_s {
     char *name;
     sfSound *sound;
-
     struct sound_s *next;
-} sounds_t;
+} sound_t;
+
+typedef struct scene_s
+{
+    
+} scene_t;
 
 #endif

@@ -16,7 +16,7 @@ static sfSound *create_sound(char *filepath)
 
 void add_sound(char *filepath, char *name)
 {
-    sounds_t *new = malloc(sizeof(sounds_t));
+    sound_t *new = malloc(sizeof(sound_t));
 
     new->sound = create_sound(filepath);
     new->name = name;
@@ -36,7 +36,7 @@ void play_sound(char *name)
 
 void clear_sounds(void)
 {
-    sounds_t *before;
+    sound_t *before;
 
     while (sounds != NULL) {
         sfSound_destroy(sounds->sound);
