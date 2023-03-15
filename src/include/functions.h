@@ -6,6 +6,9 @@
 void scene_viewer();
 void processEvent();
 void quit_game();
+scene_t *create(scene_manager_t **manager);
+
+void init_scene_one(scene_manager_t *manager);
 
 void add_sound(char *filepath, char *name);
 void play_sound(char *name);

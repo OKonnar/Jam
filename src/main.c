@@ -5,14 +5,22 @@ sfClock *clock;
 sfEvent event;
 sounds_t *sounds;
 
-void init_game()
+static void init_game_elements()
 {
     clock = sfClock_create();
     window = window_change(NULL, (sfVideoMode){1920, 1080, 32}, sfResize | sfClose);
     sounds = NULL;
 }
 
-bool updateClock(sfClock *clock, int fps)
+scene_manager_t *init_scene_manager()
+{
+    scene_manager_t *manager = malloc(sizeof(scene_manager_t));
+    manager->scenes = NULL;
+    manager->create_scene = create;
+    return manager;
+}
+
+static bool updateClock(sfClock *clock, int fps)
 {
     static float deltaTime = 0;
 
@@ -23,9 +31,15 @@ bool updateClock(sfClock *clock, int fps)
     return false;
 }
 
+static void init_scenes(scene_manager_t *manager)
+{
+    init_scene_one(manager);
+}
+
 int main()
 {
-    init_game();
+    init_game_elements();
+    init_scenes(init_scene_manager());
 
     while(sfRenderWindow_isOpen(window)) {
         processEvent();
