@@ -19,6 +19,6 @@
 extern sfRenderWindow *window;
 extern sfClock *clock;
 extern sfEvent event;
-extern sounds_t *sounds;
+extern sound_t *sounds;
 
 #endif

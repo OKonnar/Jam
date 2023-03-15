@@ -1,9 +1,5 @@
 #include "../include/functions.h"
 
-#include <AL/al.h>
-#include <AL/alc.h>
-
-
 static sfSound *create_sound(char *filepath)
 {
     sfSoundBuffer *buffer = sfSoundBuffer_createFromFile(filepath);
@@ -27,7 +23,7 @@ void add_sound(char *filepath, char *name)
 
 void play_sound(char *name)
 {
-    sounds_t *finder = sounds;
+    sound_t *finder = sounds;
 
     for (; finder != NULL && strcmp(finder->name, name) != 0; finder = finder->next);
     if (finder != NULL)
@@ -45,10 +41,4 @@ void clear_sounds(void)
         sounds = sounds->next;
         free(before);
     }
-
-    ALCcontext *context = alcGetCurrentContext();
-    ALCdevice *device = alcGetContextsDevice(context);
-    alcMakeContextCurrent(NULL);
-    alcDestroyContext(context);
-    alcCloseDevice(device);
 }

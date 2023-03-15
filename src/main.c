@@ -3,7 +3,7 @@
 sfRenderWindow *window;
 sfClock *clock;
 sfEvent event;
-sounds_t *sounds;
+sound_t *sounds;
 
 void init_game()
 {
