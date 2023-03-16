@@ -11,10 +11,12 @@ scene_t *create(scene_manager_t **manager)
         new_scene->number = (*manager)->scenes->number + 1;
     new_scene->sprites = NULL;
     new_scene->objects = NULL;
+    new_scene->texts = NULL;
     for (int i = 0; i < 8; new_scene->event_trigger[i] = false, i++);
     new_scene->add_sprite = add_sprite;
     new_scene->scene_display = scene_display;
     new_scene->find_object = find_object;
+    new_scene->add_text = add_text;
     new_scene->next = (*manager)->scenes;;
     (*manager)->scenes = new_scene;
     return new_scene;

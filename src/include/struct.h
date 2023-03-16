@@ -11,9 +11,12 @@ typedef struct sound_s
 
 typedef struct sprite_s
 {
-    sfSprite *sprite;
-    bool show;
     char name[256];
+    bool show;
+    int cursor_trigger;
+    bool clicked;
+    bool hover;
+    sfSprite *sprite;
     struct sprite_s *next;
 } sprite_t;
 
@@ -24,14 +27,27 @@ typedef struct object_s
     struct object_s *next;
 } object_t;
 
+typedef struct text_s
+{
+    char name[256];
+    bool show;
+    int cursor_trigger;
+    bool clicked;
+    bool hover;
+    sfText *text;
+    struct text_s *next;
+} text_t;
+
 typedef struct scene_s
 {
     int number;
     object_t *objects;
     sprite_t *sprites;
+    text_t *texts;
     bool event_trigger[8];
     void *(*find_object)(const char *, object_t *);
-    sfSprite *(*add_sprite)(const char *, const char *, struct scene_s **, sfIntRect *);
+    sfSprite *(*add_sprite)(const char *, const char *, struct scene_s **, sfIntRect *, int);
+    sfText *(*add_text)(const char *, const char *, struct scene_s **, const char *, int);
     void (*scene_display)(struct scene_s *);
     struct scene_s *next;
 } scene_t;

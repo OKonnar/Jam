@@ -20,9 +20,11 @@ void processEvent(scene_manager_t *manager)
     while (sfRenderWindow_pollEvent(window, &event))
     {
         while (scene_ptr != NULL) {
-            if (scene_ptr->number == scene_id)
+            if (scene_ptr->number == scene_id) {
+                check_for_cursor_trigger(scene_ptr);
                 scene_debug(scene_ptr);
                 scene_event[scene_id](scene_ptr);
+            }
             scene_ptr = scene_ptr->next;
         }
         scene_viewer();

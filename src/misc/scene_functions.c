@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntRect *rect)
+sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntRect *rect, int cursor_trigger)
 {
     sprite_t *new_sprite = malloc(sizeof(sprite_t));
     object_t *new_object = malloc(sizeof(object_t));
@@ -12,8 +12,11 @@ sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntR
     strcpy(new_sprite->name, name);
     new_sprite->sprite = sfSprite_create();
     sfSprite_setTexture(new_sprite->sprite, texture, sfFalse);
-    new_object->object = new_sprite->sprite;
+    new_object->object = new_sprite;
     new_sprite->show = true;
+    new_sprite->cursor_trigger = cursor_trigger;
+    new_sprite->clicked = false;
+    new_sprite->hover = false;
 
     new_sprite->next = (*scene)->sprites;
     new_object->next = (*scene)->objects;
@@ -22,15 +25,49 @@ sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntR
     return new_sprite->sprite;
 }
 
+sfText *add_text(const char *name, const char *path, scene_t **scene, const char *text_buffer, int cursor_trigger)
+{
+    text_t *new_text = malloc(sizeof(text_t));
+    object_t *new_object = malloc(sizeof(object_t));
+    sfFont *font = sfFont_createFromFile(path);
+
+    memset(new_text->name, 0, 256);
+    memset(new_object->name, 0, 256);
+    strcpy(new_text->name, name);
+    strcpy(new_object->name, name);
+    new_text->text = sfText_create();
+    sfText_setFont(new_text->text, font);
+    sfText_setString(new_text->text, text_buffer);
+
+    new_object->object = new_text;
+    new_text->show = true;
+    new_text->cursor_trigger = cursor_trigger;
+    new_text->clicked = false;
+    new_text->hover = false;
+
+    new_text->next = (*scene)->texts;
+    new_object->next = (*scene)->objects;
+    (*scene)->texts = new_text;
+    (*scene)->objects = new_object;
+    return new_text->text;
+}
+
 void scene_display(scene_t *scene)
 {
     sprite_t *sprite_ptr = scene->sprites;
+    text_t *text_ptr = scene->texts;
 
     sfRenderWindow_clear(window, sfBlack);
     while (sprite_ptr != NULL) {
         if (sprite_ptr->show == true)
             sfRenderWindow_drawSprite(window, sprite_ptr->sprite, sfFalse);
         sprite_ptr = sprite_ptr->next;
+    }
+    while (text_ptr != NULL) {
+        if (text_ptr->show == true) {
+            sfRenderWindow_drawText(window, text_ptr->text, sfFalse);
+        }
+        text_ptr = text_ptr->next;
     }
     sfRenderWindow_display(window);
 

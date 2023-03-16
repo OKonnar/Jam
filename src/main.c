@@ -42,7 +42,7 @@ int main()
 
     while(sfRenderWindow_isOpen(window)) {
         processEvent(manager);
-        if (updateClock(clock, 120)) {
+        if (updateClock(clock, FPS)) {
             manager->compute_scene(manager);
         }
     }

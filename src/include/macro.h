@@ -14,6 +14,7 @@
 #include "struct.h"
 
 #define NAME "game"
+#define FPS 120
 
 extern sfRenderWindow *window;
 extern sfClock *clock;
@@ -21,15 +22,21 @@ extern sfEvent event;
 extern sounds_t *sounds;
 extern int scene_id;
 
+enum cursor_trigger {
+    NONE,
+    CLICK,
+    HOVER,
+    CLICK_AND_HOVER
+};
+
 enum trigger {
     UP,
     DOWN,
     RIGHT,
     LEFT,
-    PAUSE,
-    CUSTOM1,
-    CUSTOM2,
-    CUSTOM3
+    LEANL,
+    LEANR,
+    PAUSE
 };
 
 #endif
