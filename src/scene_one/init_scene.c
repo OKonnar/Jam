@@ -3,7 +3,7 @@
 void init_scene_one(scene_manager_t *manager)
 {
     scene_t *my_scene = manager->create_scene(&manager);
-    my_scene->add_sprite("spike", "./assets/sprites/spike.png", &my_scene, NULL);
     sfSprite *me = my_scene->add_sprite("gally", "./assets/sprites/gally.png", &my_scene, NULL);
+    my_scene->add_sprite("spike", "./assets/sprites/spike.png", &my_scene, NULL);
     sfSprite_setPosition(me, (sfVector2f){500, 0});
 }

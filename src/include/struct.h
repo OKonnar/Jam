@@ -27,6 +27,7 @@ typedef struct scene_s
     int number;
     object_t *objects;
     sprite_t *sprites;
+    bool event_trigger[8];
     void *(*find_object)(const char *, object_t *);
     sfSprite *(*add_sprite)(const char *, const char *, struct scene_s **, sfIntRect *);
     void (*scene_display)(struct scene_s *);

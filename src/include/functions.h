@@ -39,6 +39,7 @@ void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect);
 
 void update_scene_one(scene_t *scene);
 void init_scene_one(scene_manager_t *manager);
+void event_scene_one(scene_t *scene);
 
 
 #endif
