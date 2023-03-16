@@ -20,7 +20,6 @@ void scene_viewer()
         alt = true;
     if (event.key.code == sfKeyLAlt && event.key.type == sfEvtKeyReleased) {
         alt = false;
-        printf("%d\n", scene);
         scene_id = scene;
         scene = 0;
     }
