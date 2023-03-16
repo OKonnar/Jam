@@ -20,5 +20,6 @@ extern sfRenderWindow *window;
 extern sfClock *clock;
 extern sfEvent event;
 extern sounds_t *sounds;
+extern int scene_id;
 
 #endif

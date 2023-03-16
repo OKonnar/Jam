@@ -21,7 +21,7 @@ void scene_viewer()
     if (event.key.code == sfKeyLAlt && event.key.type == sfEvtKeyReleased) {
         alt = false;
         printf("%d\n", scene);
-        // set la scene la
+        scene_id = scene;
         scene = 0;
     }
 }
