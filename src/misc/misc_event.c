@@ -15,7 +15,6 @@ void scene_viewer()
         scene *= 10;
         scene += event.key.code - 48;
     }
-
     if (event.key.code == sfKeyLAlt && event.key.type == sfEvtKeyPressed)
         alt = true;
     if (event.key.code == sfKeyLAlt && event.key.type == sfEvtKeyReleased) {

@@ -1,5 +1,17 @@
 #include "./include/functions.h"
 
+/* let's create function prototype here because it's convenient*/
+
+void update_scene_one(scene_t *scene);
+void init_scene_one(scene_manager_t *manager);
+void event_scene_one(scene_t *scene);
+
+
+void init_scenes(scene_manager_t *manager)
+{
+    init_scene_one(manager);
+}
+
 void processEvent(scene_manager_t *manager)
 {
     static void (*scene_event[1])(scene_t *) = {&event_scene_one};
@@ -9,6 +21,7 @@ void processEvent(scene_manager_t *manager)
     {
         while (scene_ptr != NULL) {
             if (scene_ptr->number == scene_id)
+                scene_debug(scene_ptr);
                 scene_event[scene_id](scene_ptr);
             scene_ptr = scene_ptr->next;
         }

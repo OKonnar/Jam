@@ -34,11 +34,6 @@ static bool updateClock(sfClock *clock, int fps)
     return false;
 }
 
-static void init_scenes(scene_manager_t *manager)
-{
-    init_scene_one(manager);
-}
-
 int main()
 {
     scene_manager_t *manager = init_scene_manager();

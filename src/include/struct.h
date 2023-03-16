@@ -12,6 +12,8 @@ typedef struct sound_s
 typedef struct sprite_s
 {
     sfSprite *sprite;
+    bool show;
+    char name[256];
     struct sprite_s *next;
 } sprite_t;
 
