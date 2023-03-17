@@ -35,7 +35,7 @@ void check_for_cursor_trigger(scene_t *scene)
     while (sprite_ptr != NULL) {
         if (sprite_ptr->cursor_trigger == CLICK_AND_HOVER || sprite_ptr->cursor_trigger == HOVER) {
             bounds = sfSprite_getGlobalBounds(sprite_ptr->sprite);
-            if (cursor.x > bounds.left && (cursor.x < bounds.width + bounds.width) && cursor.y > bounds.top && cursor.y < (bounds.height + bounds.top))
+            if (cursor.x > bounds.left && (cursor.x < bounds.left + bounds.width) && cursor.y > bounds.top && cursor.y < (bounds.height + bounds.top))
                 sprite_ptr->hover = true;
             else
                 sprite_ptr->hover = false;
@@ -68,7 +68,6 @@ void check_for_cursor_trigger(scene_t *scene)
 
     if (event.key.type != sfEvtMouseButtonPressed)
         return;
-
 
     while (sprite_ptr != NULL) {
         if (sprite_ptr->cursor_trigger == CLICK_AND_HOVER || sprite_ptr->cursor_trigger == CLICK) {

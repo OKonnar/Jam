@@ -4,7 +4,7 @@ SRC		=	$(shell find -name "*.c")
 
 OBJ		=	$(SRC:.c=.o)
 
-FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lm
+FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window -lm
 
 all:	$(NAME)
 	@gcc -s -g -o $(NAME) $(OBJ) $(FLAGS)

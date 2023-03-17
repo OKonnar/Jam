@@ -1,6 +1,8 @@
 #ifndef STRUCT_H
     #define STRUCT_H
 
+#define MAX_EVENT_TRIGGER 8
+
 typedef struct sound_s
 {
     char *name;
@@ -44,7 +46,7 @@ typedef struct scene_s
     object_t *objects;
     sprite_t *sprites;
     text_t *texts;
-    bool event_trigger[8];
+    bool event_trigger[MAX_EVENT_TRIGGER];
     void *(*find_object)(const char *, object_t *);
     sfSprite *(*add_sprite)(const char *, const char *, struct scene_s **, sfIntRect *, int);
     sfText *(*add_text)(const char *, const char *, struct scene_s **, const char *, int);
@@ -55,7 +57,6 @@ typedef struct scene_s
 typedef struct scene_manager_s
 {
     scene_t *scenes;
-    text_t *fps;
     scene_t *(*create_scene)(struct scene_manager_s **);
     void (*compute_scene)(struct scene_manager_s *);
 } scene_manager_t;

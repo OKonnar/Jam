@@ -14,7 +14,7 @@
 #include "struct.h"
 
 #define NAME "game"
-#define FPS 120
+#define FPS 240
 
 extern sfRenderWindow *window;
 extern sfClock *clock;

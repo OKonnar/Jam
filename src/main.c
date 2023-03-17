@@ -27,7 +27,7 @@ static bool updateClock(sfClock *clock, int fps)
 {
     static float deltaTime = 0;
 
-    if (sfTime_asSeconds(sfClock_getElapsedTime(clock)) - deltaTime > (float)1 / fps) {
+    if (sfTime_asSeconds(sfClock_getElapsedTime(clock)) - deltaTime > 1.0 / fps) {
         deltaTime = sfTime_asSeconds(sfClock_getElapsedTime(clock));
         return true;
     }
@@ -41,6 +41,7 @@ int main()
     init_scenes(manager);
 
     while(sfRenderWindow_isOpen(window)) {
+
         processEvent(manager);
         if (updateClock(clock, FPS)) {
             manager->compute_scene(manager);
