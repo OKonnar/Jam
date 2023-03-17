@@ -9,7 +9,7 @@
 sfRenderWindow *window_change(sfRenderWindow *window, sfVideoMode videoMode, sfUint32 style);
 void check_for_cursor_trigger(scene_t *scene);
 void scene_viewer();
-void processEvent();
+void processEvent(scene_manager_t *manager);
 void quit_game();
 
 /* scene manager related functions */
@@ -25,7 +25,6 @@ sfText *add_text(const char *name, const char *path, scene_t **scene, const char
 void scene_display(scene_t *scene);
 void scene_debug(scene_t *scene);
 void init_scenes(scene_manager_t *manager);
-
 
 /* sound related functions */
 

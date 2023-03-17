@@ -2,7 +2,7 @@
 
 void quit_game()
 {
-    if (event.type == sfEvtClosed || event.key.code == sfKeyEscape)
+    if (event.type == sfEvtClosed || (event.type == sfEvtKeyPressed && event.key.code == sfKeyEscape))
         sfRenderWindow_close(window);
 }
 

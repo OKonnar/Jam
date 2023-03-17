@@ -55,6 +55,7 @@ typedef struct scene_s
 typedef struct scene_manager_s
 {
     scene_t *scenes;
+    text_t *fps;
     scene_t *(*create_scene)(struct scene_manager_s **);
     void (*compute_scene)(struct scene_manager_s *);
 } scene_manager_t;
