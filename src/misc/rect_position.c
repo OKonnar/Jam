@@ -12,23 +12,26 @@ static void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect)
     sfSprite_setTextureRect(sprite, final_rec);
 }
 
-void update_rect(sfSprite *sprite, int* depths, int speed)
+bool update_rect(sfSprite *sprite, int* depths, int speed)
 {
     static int latency = 0;
 
     latency++;
     sfSprite_setScale(sprite, (sfVector2f){1, 1});
     if (latency < FPS / speed)
-        return;
+        return (false);
     latency = 0;
     sfIntRect sprite_rect = sfSprite_getTextureRect(sprite);
     int stateY = sprite_rect.top / sprite_rect.height;
     int maxX = (depths[stateY] - 1) * sprite_rect.width;
 
-    if (sprite_rect.left >= maxX)
+    if (sprite_rect.left >= maxX) {
         sfSprite_setTextureRect_relative(sprite, (sfIntRect){.top = 0, .width = 0, .left = -sprite_rect.left, .height = 0});
+        return (true);
+    }
     else
         sfSprite_setTextureRect_relative(sprite, (sfIntRect){.top = 0, .width = 0, .left = sprite_rect.width, .height = 0});
+    return (false);
 }
 
 bool select_rect(int key, sfSprite *sprite, sfIntRect rect, bool *updated)

@@ -37,7 +37,7 @@ void clear_sounds(void);
 void sfSprite_setPosition_relative(sfSprite *sprite , sfVector2f new_pos);
 void sfSprite_setRotation_relative(sfSprite *sprite, float angle);
 sfVector2f compute_speed(float x, float y);
-void update_rect(sfSprite *sprite, int* depths, int speed);
+bool update_rect(sfSprite *sprite, int* depths, int speed);
 bool select_rect(int key, sfSprite *sprite, sfIntRect rect, bool *updated);
 
 

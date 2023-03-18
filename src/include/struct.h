@@ -28,6 +28,8 @@ typedef struct sprite_s
     int cursor_trigger;
     bool clicked;
     bool hover;
+    bool test;
+    bool test2;
     sfSprite *sprite;
     parameter_t *parameter;
     struct sprite_s *next;

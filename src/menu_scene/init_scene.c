@@ -10,5 +10,4 @@ void init_scene_menu(scene_manager_t *manager)
     sfSprite_setOrigin(play_button, (sfVector2f){507 / 2,  54 / 2});
     sfSprite_setScale(play_button, (sfVector2f){1, 1});
     sfSprite_setPosition(play_button, (sfVector2f){1920 / 2, 1080 / 2});
-    add_sound("./assets/sounds/cockZ.wav", "cockz");
 }
