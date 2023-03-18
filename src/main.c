@@ -26,18 +26,18 @@ static scene_manager_t *init_scene_manager()
 static bool updateClock()
 {
     static float deltaTime = 0;
-    static float array[FPS];
-    static int array_ptr = 0;
-    float res = 0;
+    // static float array[FPS];
+    // static int array_ptr = 0;
+    // float res = 0;
     float time = sfTime_asSeconds(sfClock_getElapsedTime(clock));
 
     if (time - deltaTime > 1.0 / FPS) {
-        array[array_ptr] = ((time - deltaTime) * FPS) * 100;
-        array_ptr = array_ptr + 1 == FPS ? 0 : array_ptr + 1;
-        for (int i = 0; i < FPS; i++)
-            res += array[i];
-        if (res / FPS > 102.0)
-            printf("%f\n", res / FPS);
+        // array[array_ptr] = ((time - deltaTime) * FPS) * 100;
+        // array_ptr = array_ptr + 1 == FPS ? 0 : array_ptr + 1;
+        // for (int i = 0; i < FPS; i++)
+        //     res += array[i];
+        // if (res / FPS > 102.0)
+        //     printf("%f\n", res / FPS);
         deltaTime = time;
         return true;
     }

@@ -39,7 +39,7 @@ void sfSprite_setRotation_relative(sfSprite *sprite, float angle);
 sfVector2f compute_speed(float x, float y);
 void update_rect(sfSprite *sprite, int* depths, int speed);
 bool select_rect(int key, sfSprite *sprite, sfIntRect rect, bool *updated);
-
+bool select_rect_axis(bool condition, sfSprite *sprite, sfIntRect rect, bool *updated);
 
 
 #endif

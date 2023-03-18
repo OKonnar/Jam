@@ -18,7 +18,6 @@ void update_rect(sfSprite *sprite, int* depths, int speed)
     static int latency = 0;
 
     latency++;
-    sfSprite_setScale(sprite, (sfVector2f){1, 1});
     if (latency < FPS / speed)
         return;
     latency = 0;
@@ -30,6 +29,20 @@ void update_rect(sfSprite *sprite, int* depths, int speed)
         sfSprite_setTextureRect_relative(sprite, (sfIntRect){.top = 0, .width = 0, .left = -sprite_rect.left, .height = 0});
     else
         sfSprite_setTextureRect_relative(sprite, (sfIntRect){.top = 0, .width = 0, .left = sprite_rect.width, .height = 0});
+}
+
+
+bool select_rect_axis(bool condition, sfSprite *sprite, sfIntRect rect, bool *updated)
+{
+    if (condition) {
+        if (*updated == false) {
+            sfSprite_setTextureRect(sprite, rect);
+            *updated = true;
+        }
+        return true;
+    } else
+        *updated = false;
+    return false;
 }
 
 bool select_rect(int key, sfSprite *sprite, sfIntRect rect, bool *updated)
