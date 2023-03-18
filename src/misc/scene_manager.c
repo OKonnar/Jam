@@ -1,4 +1,5 @@
 #include "../include/functions.h"
+#include <stdio.h>
 
 scene_t *create(scene_manager_t **manager)
 {
@@ -9,6 +10,7 @@ scene_t *create(scene_manager_t **manager)
         new_scene->number = 0;
     else
         new_scene->number = (*manager)->scenes->number + 1;
+    printf("%d\n", new_scene->number);
     new_scene->sprites = NULL;
     new_scene->objects = NULL;
     new_scene->texts = NULL;
