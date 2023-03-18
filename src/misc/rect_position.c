@@ -12,7 +12,6 @@ static void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect)
     sfSprite_setTextureRect(sprite, final_rec);
 }
 
-
 void update_rect(sfSprite *sprite, int* depths, int speed)
 {
     static int latency = 0;
