@@ -57,3 +57,23 @@ bool select_rect(int key, sfSprite *sprite, sfIntRect rect, bool *updated)
         *updated = false;
     return false;
 }
+
+void make_sprite_face_right(sfSprite *p1)
+{
+    sfVector2f scale = sfSprite_getScale(p1);
+
+    sfSprite_setScale(p1, (sfVector2f){
+        .x = scale.x < 0 ? scale.x * (-1) : scale.x,
+        .y = scale.y
+    });
+}
+
+void make_sprite_face_left(sfSprite *p1)
+{
+    sfVector2f scale = sfSprite_getScale(p1);
+
+    sfSprite_setScale(p1, (sfVector2f){
+        .x = scale.x > 0 ? scale.x * (-1) : scale.x,
+        .y = scale.y
+    });
+}
