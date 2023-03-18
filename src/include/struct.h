@@ -59,6 +59,7 @@ typedef struct scene_s
     object_t *objects;
     sprite_t *sprites;
     text_t *texts;
+    bool test;
     bool event_trigger[MAX_EVENT_TRIGGER];
     void *(*find_object)(const char *, object_t *);
     sfSprite *(*add_sprite)(const char *, const char *, struct scene_s **, sfIntRect *, int);

@@ -8,11 +8,10 @@ void init_scene_one(scene_manager_t *manager);
 void init_scene_menu(scene_manager_t *manager);
 void update_scene_menu(scene_t *);
 
-
 void init_scenes(scene_manager_t *manager)
 {
-    init_scene_one(manager);
     init_scene_menu(manager);
+    init_scene_one(manager);
 }
 
 void processEvent(scene_manager_t *manager)
@@ -36,7 +35,7 @@ void processEvent(scene_manager_t *manager)
 void compute_scene(scene_manager_t *manager)
 {
     scene_t *ptr = manager->scenes;
-    void (*scene_update[2])(scene_t *scene) = {&update_scene_one,&update_scene_menu};
+    void (*scene_update[2])(scene_t *scene) = {&update_scene_menu,&update_scene_one};
 
     while (ptr != NULL) {
         if (ptr->number == scene_id) {
