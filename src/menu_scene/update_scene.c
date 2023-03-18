@@ -9,6 +9,8 @@ void update_scene_menu(scene_t *scene)
         if (update_rect(intro->sprite,(int[1]){54}, 20) ==  false) {
             sfSprite_setScale(intro->sprite, (sfVector2f){6.75,6.65});
             intro->test = true;
+            intro->show = true;
+            play_button->show = false;
         } else {
             intro->test2 = true;
             intro->test = false;
