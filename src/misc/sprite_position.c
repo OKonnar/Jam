@@ -16,14 +16,8 @@ void sfSprite_setRotation_relative(sfSprite *sprite, float angle)
     sfSprite_setRotation(sprite, intial_angle + angle);
 }
 
-void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect)
+sfVector2f compute_speed(float x, float y)
 {
-    sfIntRect initial_rect = sfSprite_getTextureRect(sprite);
-    sfIntRect final_rec = {
-        .height = initial_rect.height + rect.height,
-        .left = initial_rect.left + rect.left,
-        .top = initial_rect.top + rect.top,
-        .width = initial_rect.width + rect.width
-    };
-    sfSprite_setTextureRect(sprite, final_rec);
+    return (sfVector2f){.x = x * (1 / (float)FPS), .y = y * (1 / (float)FPS)};
 }
+

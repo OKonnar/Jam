@@ -3,8 +3,10 @@
 sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntRect *rect, int cursor_trigger)
 {
     sprite_t *new_sprite = malloc(sizeof(sprite_t));
+    new_sprite->parameter = malloc(sizeof(parameter_t));
     object_t *new_object = malloc(sizeof(object_t));
-    sfTexture *texture = sfTexture_createFromFile(path, rect);
+    sfTexture *texture = sfTexture_createFromFile(path, NULL);
+    sfVector2u size = sfTexture_getSize(texture);
 
     memset(new_sprite->name, 0, 256);
     memset(new_object->name, 0, 256);
@@ -12,12 +14,27 @@ sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntR
     strcpy(new_sprite->name, name);
     new_sprite->sprite = sfSprite_create();
     sfSprite_setTexture(new_sprite->sprite, texture, sfFalse);
+    if (rect != NULL)
+        sfSprite_setTextureRect(new_sprite->sprite, (*rect));
     new_object->object = new_sprite;
     new_sprite->show = true;
     new_sprite->cursor_trigger = cursor_trigger;
     new_sprite->clicked = false;
     new_sprite->hover = false;
 
+    new_sprite->parameter->X = size.x;
+    new_sprite->parameter->Y = size.y;
+    new_sprite->parameter->deltaX = 0;
+    new_sprite->parameter->deltaY = 0;
+    new_sprite->parameter->stateX = 0;
+    new_sprite->parameter->stateY = 0;
+
+    if (rect != NULL) {
+        new_sprite->parameter->deltaX = rect->width;
+        new_sprite->parameter->deltaY = rect->height;
+        new_sprite->parameter->stateX = size.x / rect->width;
+        new_sprite->parameter->stateX = size.y / rect->height;
+    }
     new_sprite->next = (*scene)->sprites;
     new_object->next = (*scene)->objects;
     (*scene)->sprites = new_sprite;

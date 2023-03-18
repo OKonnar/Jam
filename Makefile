@@ -7,7 +7,7 @@ OBJ		=	$(SRC:.c=.o)
 FLAGS 	= -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window -lm
 
 all:	$(NAME)
-	@gcc -s -g -o $(NAME) $(OBJ) $(FLAGS)
+	@gcc -O3 -march=native -flto -s -g -o $(NAME) $(OBJ) $(FLAGS)
 
 $(NAME):	$(OBJ)
 

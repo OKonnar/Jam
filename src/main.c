@@ -14,7 +14,7 @@ static void init_game_elements()
     scene_id = 0;
 }
 
-scene_manager_t *init_scene_manager()
+static scene_manager_t *init_scene_manager()
 {
     scene_manager_t *manager = malloc(sizeof(scene_manager_t));
     manager->scenes = NULL;
@@ -23,12 +23,22 @@ scene_manager_t *init_scene_manager()
     return manager;
 }
 
-static bool updateClock(sfClock *clock, int fps)
+static bool updateClock()
 {
     static float deltaTime = 0;
+    static float array[FPS];
+    static int array_ptr = 0;
+    float res = 0;
+    float time = sfTime_asSeconds(sfClock_getElapsedTime(clock));
 
-    if (sfTime_asSeconds(sfClock_getElapsedTime(clock)) - deltaTime > 1.0 / fps) {
-        deltaTime = sfTime_asSeconds(sfClock_getElapsedTime(clock));
+    if (time - deltaTime > 1.0 / FPS) {
+        array[array_ptr] = ((time - deltaTime) * FPS) * 100;
+        array_ptr = array_ptr + 1 == FPS ? 0 : array_ptr + 1;
+        for (int i = 0; i < FPS; i++)
+            res += array[i];
+        if (res / FPS > 102.0)
+            printf("%f\n", res / FPS);
+        deltaTime = time;
         return true;
     }
     return false;
@@ -43,7 +53,7 @@ int main()
     while(sfRenderWindow_isOpen(window)) {
 
         processEvent(manager);
-        if (updateClock(clock, FPS)) {
+        if (updateClock()) {
             manager->compute_scene(manager);
         }
     }

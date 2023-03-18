@@ -4,7 +4,6 @@
 
 void update_scene_one(scene_t *scene);
 void init_scene_one(scene_manager_t *manager);
-void event_scene_one(scene_t *scene);
 
 
 void init_scenes(scene_manager_t *manager)
@@ -14,7 +13,6 @@ void init_scenes(scene_manager_t *manager)
 
 void processEvent(scene_manager_t *manager)
 {
-    static void (*scene_event[1])(scene_t *) = {&event_scene_one};
     scene_t *scene_ptr = manager->scenes;
 
     while (sfRenderWindow_pollEvent(window, &event))
@@ -23,7 +21,6 @@ void processEvent(scene_manager_t *manager)
             if (scene_ptr->number == scene_id) {
                 check_for_cursor_trigger(scene_ptr);
                 scene_debug(scene_ptr);
-                scene_event[scene_id](scene_ptr);
             }
             scene_ptr = scene_ptr->next;
         }

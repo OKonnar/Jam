@@ -10,11 +10,13 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "struct.h"
 
 #define NAME "game"
-#define FPS 240
+#define FPS 120
+#define GROUND 900
 
 extern sfRenderWindow *window;
 extern sfClock *clock;
@@ -27,16 +29,6 @@ enum cursor_trigger {
     CLICK,
     HOVER,
     CLICK_AND_HOVER
-};
-
-enum trigger {
-    UP,
-    DOWN,
-    RIGHT,
-    LEFT,
-    LEANL,
-    LEANR,
-    PAUSE
 };
 
 #endif

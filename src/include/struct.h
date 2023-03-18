@@ -11,6 +11,16 @@ typedef struct sound_s
     struct sound_s *next;
 } sounds_t;
 
+typedef struct parameter_s
+{
+    unsigned int X;
+    unsigned int Y;
+    unsigned int deltaX;
+    unsigned int deltaY;
+    unsigned int stateX;
+    unsigned int stateY;
+} parameter_t;
+
 typedef struct sprite_s
 {
     char name[256];
@@ -19,6 +29,7 @@ typedef struct sprite_s
     bool clicked;
     bool hover;
     sfSprite *sprite;
+    parameter_t *parameter;
     struct sprite_s *next;
 } sprite_t;
 
