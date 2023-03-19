@@ -5,7 +5,12 @@ void init_scene_player_selection(scene_manager_t *manager)
     scene_t *scene = manager->create_scene(&manager);
 
 
-
+    add_sound("assets/sounds/Ass_we_can.wav", "AWC");
+    add_sound("assets/sounds/Boss_in_this_gym.wav", "BITG");
+    add_sound("assets/sounds/Lets_suck_some_dick.wav", "LSSD");
+    add_sound("assets/sounds/fuck_you_van.wav", "FU");
+    add_sound("assets/sounds/you_got_me_mad_now.wav", "YGMMN");
+    add_sound("assets/sounds/Iam_an_artist.wav", "IAAA");
     sfSprite_setPosition(scene->add_sprite("head_billy_p1", "./assets/sprites/billy-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
     sfSprite_setPosition(scene->add_sprite("head_kazuya_p1", "./assets/sprites/kazuya-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
     sfSprite_setPosition(scene->add_sprite("head_ricardo_p1", "./assets/sprites/ricardo-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});

@@ -30,6 +30,7 @@ static int manage_player_one_selection(scene_t *scene)
     sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
     sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
     sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
+    char *warcry[6] = {"AWC", "FU", "IAAA", "YGMMN", "LSSD", "BITG"};
 
     sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
     sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
@@ -105,6 +106,7 @@ static int manage_player_two_selection(scene_t *scene)
     sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
     sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
     sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
+    char *warcry[6] = {"AWC", "FU", "IAAA", "YGMMN", "LSSD", "BITG"};
 
     sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
     sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
@@ -114,6 +116,8 @@ static int manage_player_two_selection(scene_t *scene)
         locked = false;
     }
     if (locked == true || sfJoystick_isButtonPressed(0, 0)) {
+        if (!locked)
+            play_sound(warcry[rand() % 6]);
         lock_sprite->show = true;
         select_sprite->show = false;
         locked = true;
@@ -156,8 +160,17 @@ static int manage_player_two_selection(scene_t *scene)
 
 void update_scene_player_selection(scene_t *scene)
 {
-    int p1 = manage_player_one_selection(scene);
+    static bool locked = false;
+    static int frames = 0;
     int p2 = manage_player_two_selection(scene);
-    if (p1 >= 0 && p2 >= 0)
-        scene_id = 2;
+    int p1 = manage_player_one_selection(scene);
+
+    if (frames > FPS * 2)
+        scene_id++;
+    if (!locked && p1 >= 0 && p2 >= 0) {
+        locked = true;
+    } else if (p1 < 0 || p2 < 0)
+        locked = false;
+    if (locked)
+        frames++;
 }

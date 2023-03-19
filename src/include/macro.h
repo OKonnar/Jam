@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 
 #include "struct.h"
 
@@ -19,7 +20,7 @@
 #define GROUND 900
 
 extern sfRenderWindow *window;
-extern sfClock *clock;
+extern sfClock *daclock;
 extern sfEvent event;
 extern sounds_t *sounds;
 extern int scene_id;
