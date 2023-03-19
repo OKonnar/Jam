@@ -2,13 +2,16 @@
 
 /* let's create function prototype here because it's convenient*/
 
-void update_scene_one(scene_t *scene);
-void init_scene_one(scene_manager_t *manager);
+void update_fight_scene(scene_t *scene);
+void init_fight_scene(scene_manager_t *manager);
+void update_menu_scene(scene_t *scene);
+void init_menu_scene(scene_manager_t *manager);
 
 
 void init_scenes(scene_manager_t *manager)
 {
-    init_scene_one(manager);
+    init_menu_scene(manager);
+    init_fight_scene(manager);
 }
 
 void processEvent(scene_manager_t *manager)
@@ -32,7 +35,7 @@ void processEvent(scene_manager_t *manager)
 void compute_scene(scene_manager_t *manager)
 {
     scene_t *ptr = manager->scenes;
-    void (*scene_update[1])(scene_t *scene) = {&update_scene_one};
+    void (*scene_update[2])(scene_t *scene) = {&update_menu_scene, &update_fight_scene};
 
     while (ptr != NULL) {
         if (ptr->number == scene_id) {

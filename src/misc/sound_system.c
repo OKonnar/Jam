@@ -30,6 +30,15 @@ void play_sound(char *name)
         sfSound_play(finder->sound);
 }
 
+sfSound *get_sound(char *name)
+{
+    sounds_t *finder = sounds;
+
+    for (; finder != NULL && strcmp(finder->name, name) != 0; finder = finder->next);
+    if (finder != NULL)
+        return finder->sound;
+}
+
 void clear_sounds(void)
 {
     sounds_t *before;

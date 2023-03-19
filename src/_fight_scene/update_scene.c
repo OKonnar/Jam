@@ -91,6 +91,7 @@ void player_one(scene_t *scene)
     attackdelay++;
     update_rect(player->sprite, (int[6]){7, 10, 5, 8, 1, 6}, attack == true ? 10 : 8);
     if (scene->event_trigger[0] > 0) {
+        play_sound("snap");
         printf("player 1 got hit for %d hp!\n", scene->event_trigger[0]);
         scene->event_trigger[0] = 0;
     }
@@ -163,6 +164,7 @@ void player_two(scene_t *scene)
     attackdelay++;
     update_rect(player->sprite, (int[6]){7, 10, 5, 8, 1, 6}, attack == true ? 10 : 8);
     if (scene->event_trigger[1] > 0) {
+        play_sound("snap");
         printf("player 2 got hit for %d hp!\n", scene->event_trigger[1]);
         scene->event_trigger[1] = 0;
     }
@@ -228,7 +230,7 @@ void player_two(scene_t *scene)
     }
 }
 
-void update_scene_one(scene_t *scene)
+void update_fight_scene(scene_t *scene)
 {
 
     put_marker_on_top(scene);

@@ -31,6 +31,7 @@ void init_scenes(scene_manager_t *manager);
 void add_sound(char *filepath, char *name);
 void play_sound(char *name);
 void clear_sounds(void);
+sfSound *get_sound(char *name);
 
 /* sprite related functions */
 
@@ -42,5 +43,6 @@ bool select_rect(int key, sfSprite *sprite, sfIntRect rect, bool *updated);
 bool select_rect_axis(bool condition, sfSprite *sprite, sfIntRect rect, bool *updated);
 void make_sprite_face_right(sfSprite *p1);
 void make_sprite_face_left(sfSprite *p1);
+void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect);
 
 #endif

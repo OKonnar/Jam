@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-static void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect)
+void sfSprite_setTextureRect_relative(sfSprite *sprite, sfIntRect rect)
 {
     sfIntRect initial_rect = sfSprite_getTextureRect(sprite);
     sfIntRect final_rec = {
