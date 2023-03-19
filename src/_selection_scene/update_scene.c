@@ -40,6 +40,8 @@ static int manage_player_one_selection(scene_t *scene)
         locked = false;
     }
     if (locked == true || sfKeyboard_isKeyPressed(sfKeySpace) || sfKeyboard_isKeyPressed(sfKeyEnter)) {
+        if (!locked)
+            play_sound(warcry[rand() % 6]);
         lock_sprite->show = true;
         select_sprite->show = false;
         locked = true;

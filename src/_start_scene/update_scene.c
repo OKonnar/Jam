@@ -14,7 +14,7 @@ void update_menu_scene(scene_t *scene)
         scene_id = 1;
         return;
     }
-    if (space_pressed && frame_counter > (float)FPS / 11.7) {
+    if (space_pressed && frame_counter > (float)FPS / 15) {
         sfSprite_setTextureRect_relative(intro->sprite, (sfIntRect){285, 0, 0, 0});
         frame_counter = 0;
         return;
