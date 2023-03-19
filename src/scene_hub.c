@@ -6,11 +6,14 @@ void update_fight_scene(scene_t *scene);
 void init_fight_scene(scene_manager_t *manager);
 void update_menu_scene(scene_t *scene);
 void init_menu_scene(scene_manager_t *manager);
+void update_scene_player_selection(scene_t *scene);
+void init_scene_player_selection(scene_manager_t *manager);
 
 
 void init_scenes(scene_manager_t *manager)
 {
     init_menu_scene(manager);
+    init_scene_player_selection(manager);
     init_fight_scene(manager);
 }
 
@@ -35,7 +38,7 @@ void processEvent(scene_manager_t *manager)
 void compute_scene(scene_manager_t *manager)
 {
     scene_t *ptr = manager->scenes;
-    void (*scene_update[2])(scene_t *scene) = {&update_menu_scene, &update_fight_scene};
+    void (*scene_update[3])(scene_t *scene) = {&update_menu_scene, &update_scene_player_selection , &update_fight_scene};
 
     while (ptr != NULL) {
         if (ptr->number == scene_id) {
