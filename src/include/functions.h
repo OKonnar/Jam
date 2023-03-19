@@ -23,7 +23,6 @@ void *find_object(const char *name, object_t *objects);
 sfSprite *add_sprite(const char *name, const char *path, scene_t **scene, sfIntRect *rect, int param);
 sfText *add_text(const char *name, const char *path, scene_t **scene, const char *text_buffer, int param);
 void scene_display(scene_t *scene);
-void scene_debug(scene_t *scene);
 void init_scenes(scene_manager_t *manager);
 
 /* sound related functions */

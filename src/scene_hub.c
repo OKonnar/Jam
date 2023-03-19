@@ -26,7 +26,6 @@ void processEvent(scene_manager_t *manager)
         while (scene_ptr != NULL) {
             if (scene_ptr->number == scene_id) {
                 check_for_cursor_trigger(scene_ptr);
-                scene_debug(scene_ptr);
             }
             scene_ptr = scene_ptr->next;
         }

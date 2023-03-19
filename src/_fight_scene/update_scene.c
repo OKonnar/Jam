@@ -27,7 +27,7 @@ void put_marker_on_top(scene_t *scene)
     sfSprite_setPosition(marker2, (sfVector2f){player2_pos.x, player2_pos.y - 120});
 }
 
-bool trigger_threshold(int a, int b)
+static bool trigger_threshold(int a, int b)
 {
     return a > b;
 }

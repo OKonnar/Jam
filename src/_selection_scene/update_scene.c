@@ -1,168 +1,163 @@
 #include "../include/functions.h"
-
-int c_1 = 1;
-int c_2 = 1;
-
-int d_1 = 1000;
-int d_2 = 1000;
-
-static int movement_p1(sfVector2f position)
+static bool trigger_threshold(int a, int b)
 {
-    float distance = fabsf(position.x - 345);
-    float movement = 10.0 * distance / 1000.0;
-
-    if (movement > 10.0) {
-        movement = 10.0;
-    }
-    if (movement < 2.0) {
-        movement = 2.0;
-    }
-
-    return movement;
+    return a > b;
 }
 
-static int movement_p2(sfVector2f position)
+static int manage_player_one_selection(scene_t *scene)
 {
-    float distance = fabsf(position.x - 1280);
-    float movement = 10.0 * distance / 1000.0;
-
-    if (movement > 10.0) {
-        movement = 10.0;
-    }
-    if (movement < 2.0) {
-        movement = 2.0;
-    }
-
-    return movement;
-}
-
-bool switch_boolean(int key, bool *updated)
-{
-    if (sfKeyboard_isKeyPressed(key) == true) {
-        if (*updated == false) {
-            *updated = true;
-        }
-        return true;
-    } else
-        *updated = false;
-    return false;
-}
-
-static void manage_player_one_selection(scene_t *scene)
-{
-    static bool next_p1 = false;
-    static bool limiter_p1 = false;
+    static int select = 0;
+    static bool locked = false;
+    static bool s_right = false;
+    static bool s_left = false;
     sprite_t *billy_p1 = (sprite_t *)scene->find_object("billy_p1", scene->objects);
-    sfVector2f billy_p1_pos = sfSprite_getPosition(billy_p1->sprite);
-
     sprite_t *kazuya_p1 = (sprite_t *)scene->find_object("kazuya_p1", scene->objects);
-    sfVector2f kazuya_p1_pos = sfSprite_getPosition(kazuya_p1->sprite);
-
     sprite_t *ricardo_p1 = (sprite_t *)scene->find_object("ricardo_p1", scene->objects);
-    sfVector2f ricardo_p1_pos = sfSprite_getPosition(ricardo_p1->sprite);
-
     sprite_t *van_p1 = (sprite_t *)scene->find_object("van_p1", scene->objects);
-    sfVector2f van_p1_pos = sfSprite_getPosition(van_p1->sprite);
+    sprite_t *head_billy = (sprite_t *)scene->find_object("head_billy_p1", scene->objects);
+    sprite_t *head_kazuya = (sprite_t *)scene->find_object("head_kazuya_p1", scene->objects);
+    sprite_t *head_ricardo = (sprite_t *)scene->find_object("head_ricardo_p1", scene->objects);
+    sprite_t *head_van = (sprite_t *)scene->find_object("head_van_p1", scene->objects);
+    sprite_t *select_sprite = (sprite_t *)scene->find_object("select_p1", scene->objects);
+    sprite_t *lock_sprite = (sprite_t *)scene->find_object("lock_p1", scene->objects);
+    sprite_t *right = (sprite_t *)scene->find_object("r_arr_p1", scene->objects);
+    sprite_t *left = (sprite_t *)scene->find_object("l_arr_p1", scene->objects);
+    sprite_t *billy_b = (sprite_t *)scene->find_object("billy_b_p1", scene->objects);
+    sprite_t *kazuya_b = (sprite_t *)scene->find_object("kazuya_b_p1", scene->objects);
+    sprite_t *ricardo_b = (sprite_t *)scene->find_object("ricardo_b_p1", scene->objects);
+    sprite_t *van_b = (sprite_t *)scene->find_object("van_b_p1", scene->objects);
 
+    sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
+    sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
+    sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
 
-
-    if (c_1 == 1 && billy_p1_pos.x < 345) {
-        sfSprite_setPosition(van_p1->sprite, (sfVector2f){345 - 1000, van_p1_pos.y});
-        sfSprite_setPosition(billy_p1->sprite, (sfVector2f){billy_p1_pos.x += movement_p1(billy_p1_pos), billy_p1_pos.y});
-        ((sprite_t *)scene->find_object("head_van_p1", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_billy_p1", scene->objects))->show = true;
-
-        printf("billy_p1_pos = %f\n", billy_p1_pos.x);
+    sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
+    sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
+    if (locked == true && sfKeyboard_isKeyPressed(59)) {
+        lock_sprite->show = false;
+        select_sprite->show = true;
+        locked = false;
     }
-
-    if (c_1 == 2 && kazuya_p1_pos.x < 345) {
-        sfSprite_setPosition(billy_p1->sprite, (sfVector2f){345 - 1000, billy_p1_pos.y});
-        sfSprite_setPosition(kazuya_p1->sprite, (sfVector2f){kazuya_p1_pos.x += movement_p1(kazuya_p1_pos), kazuya_p1_pos.y});
-        ((sprite_t *)scene->find_object("head_billy_p1", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_kazuya_p1", scene->objects))->show = true;
+    if (locked == true || sfKeyboard_isKeyPressed(sfKeySpace) || sfKeyboard_isKeyPressed(sfKeyEnter)) {
+        lock_sprite->show = true;
+        select_sprite->show = false;
+        locked = true;
+        return select;
     }
+    if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
+        sfSprite_setTextureRect(left->sprite, (sfIntRect){100, 0, 100, 200});
+        if (select > 0 && !s_left) {
+            s_left = true;
+            select--;
+        }
+    } else
+        s_left = false;
+    if (sfKeyboard_isKeyPressed(sfKeyRight)) {
+        sfSprite_setTextureRect(right->sprite, (sfIntRect){100, 0, 100, 200});
+        if (select < 3 && !s_right) {
+            s_right = true;
+            select++;
+        }
+    } else
+        s_right = false;
 
-    if (c_1 == 3 && ricardo_p1_pos.x < 345) {
-        sfSprite_setPosition(kazuya_p1->sprite, (sfVector2f){345 - 1000, kazuya_p1_pos.y});
-        sfSprite_setPosition(ricardo_p1->sprite, (sfVector2f){ricardo_p1_pos.x += movement_p1(ricardo_p1_pos), ricardo_p1_pos.y});
-        ((sprite_t *)scene->find_object("head_kazuya_p1", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_ricardo_p1", scene->objects))->show = true;
+    for (int i = 0; i < 4; i++) {
+        if (i != select) {
+            portrait[i]->show = false;
+            photos[i]->show = false;
+            wallpaper[i]->show = false;
+            sfSprite_setPosition(photos[i]->sprite, (sfVector2f){.x = -150, .y = 465});
+        } else {
+            wallpaper[i]->show = true;
+            portrait[i]->show = true;
+            photos[i]->show = true;
+            sfVector2f pos = sfSprite_getPosition(photos[i]->sprite);
+            float deltaX = abs(pos.x - 485);
+            sfSprite_setPosition_relative(photos[i]->sprite, (sfVector2f){.x = deltaX / 16, .y = 0});
+        }
     }
-
-    if (c_1 == 4 && van_p1_pos.x < 345) {
-        sfSprite_setPosition(ricardo_p1->sprite, (sfVector2f){345 - 1000, ricardo_p1_pos.y});
-        sfSprite_setPosition(van_p1->sprite, (sfVector2f){van_p1_pos.x += movement_p1(van_p1_pos), van_p1_pos.y});
-        ((sprite_t *)scene->find_object("head_ricardo_p1", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_van_p1", scene->objects))->show = true;
-    }
-
-    if (c_1 == 5) c_1 = 1;
-
-    if (switch_boolean(sfKeyLeft, &next_p1) == true && limiter_p1 == false) {
-        limiter_p1 = true;
-        c_1 += 1;
-    } else if (switch_boolean(sfKeyLeft, &next_p1) == false) {
-        limiter_p1 = false;
-    }
+    return -1;
 }
 
-static void manage_player_two_selection(scene_t *scene)
+static int manage_player_two_selection(scene_t *scene)
 {
-    static bool next_p2 = false;
-    static bool limiter_p2 = false;
-    sprite_t *billy_p2 = (sprite_t *)scene->find_object("billy_p2", scene->objects);
-    sfVector2f billy_p2_pos = sfSprite_getPosition(billy_p2->sprite);
+    static int select = 0;
+    static bool locked = false;
+    static bool s_right = false;
+    static bool s_left = false;
+    sprite_t *billy_p1 = (sprite_t *)scene->find_object("billy_p2", scene->objects);
+    sprite_t *kazuya_p1 = (sprite_t *)scene->find_object("kazuya_p2", scene->objects);
+    sprite_t *ricardo_p1 = (sprite_t *)scene->find_object("ricardo_p2", scene->objects);
+    sprite_t *van_p1 = (sprite_t *)scene->find_object("van_p2", scene->objects);
+    sprite_t *head_billy = (sprite_t *)scene->find_object("head_billy_p2", scene->objects);
+    sprite_t *head_kazuya = (sprite_t *)scene->find_object("head_kazuya_p2", scene->objects);
+    sprite_t *head_ricardo = (sprite_t *)scene->find_object("head_ricardo_p2", scene->objects);
+    sprite_t *head_van = (sprite_t *)scene->find_object("head_van_p2", scene->objects);
+    sprite_t *select_sprite = (sprite_t *)scene->find_object("select_p2", scene->objects);
+    sprite_t *lock_sprite = (sprite_t *)scene->find_object("lock_p2", scene->objects);
+    sprite_t *right = (sprite_t *)scene->find_object("r_arr_p2", scene->objects);
+    sprite_t *left = (sprite_t *)scene->find_object("l_arr_p2", scene->objects);
+    sprite_t *billy_b = (sprite_t *)scene->find_object("billy_b_p2", scene->objects);
+    sprite_t *kazuya_b = (sprite_t *)scene->find_object("kazuya_b_p2", scene->objects);
+    sprite_t *ricardo_b = (sprite_t *)scene->find_object("ricardo_b_p2", scene->objects);
+    sprite_t *van_b = (sprite_t *)scene->find_object("van_b_p2", scene->objects);
 
-    sprite_t *kazuya_p2 = (sprite_t *)scene->find_object("kazuya_p2", scene->objects);
-    sfVector2f kazuya_p2_pos = sfSprite_getPosition(kazuya_p2->sprite);
+    sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
+    sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
+    sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
 
-    sprite_t *ricardo_p2 = (sprite_t *)scene->find_object("ricardo_p2", scene->objects);
-    sfVector2f ricardo_p2_pos = sfSprite_getPosition(ricardo_p2->sprite);
-
-    sprite_t *van_p2 = (sprite_t *)scene->find_object("van_p2", scene->objects);
-    sfVector2f van_p2_pos = sfSprite_getPosition(van_p2->sprite);
-
-
-    if (c_2 == 1 && billy_p2_pos.x > 1280) {
-        sfSprite_setPosition(van_p2->sprite, (sfVector2f){1280 + 1000, van_p2_pos.y});
-        sfSprite_setPosition(billy_p2->sprite, (sfVector2f){billy_p2_pos.x -= movement_p2(billy_p2_pos), billy_p2_pos.y});
-        ((sprite_t *)scene->find_object("head_van_p2", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_billy_p2", scene->objects))->show = true;
+    sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
+    sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
+    if (locked == true && sfJoystick_isButtonPressed(0, 1)) {
+        lock_sprite->show = false;
+        select_sprite->show = true;
+        locked = false;
     }
-
-    if (c_2 == 2 && kazuya_p2_pos.x > 1280) {
-        sfSprite_setPosition(billy_p2->sprite, (sfVector2f){1280 + 1000, billy_p2_pos.y});
-        sfSprite_setPosition(kazuya_p2->sprite, (sfVector2f){kazuya_p2_pos.x -= movement_p2(kazuya_p2_pos), kazuya_p2_pos.y});
-        ((sprite_t *)scene->find_object("head_billy_p2", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_kazuya_p2", scene->objects))->show = true;
+    if (locked == true || sfJoystick_isButtonPressed(0, 0)) {
+        lock_sprite->show = true;
+        select_sprite->show = false;
+        locked = true;
+        return select;
     }
+    if (!trigger_threshold(sfJoystick_getAxisPosition(0, 0), -30)) {
+        sfSprite_setTextureRect(left->sprite, (sfIntRect){100, 0, 100, 200});
+        if (select > 0 && !s_left) {
+            s_left = true;
+            select--;
+        }
+    } else
+        s_left = false;
+    if (trigger_threshold(sfJoystick_getAxisPosition(0, 0), 30)) {
+        sfSprite_setTextureRect(right->sprite, (sfIntRect){100, 0, 100, 200});
+        if (select < 3 && !s_right) {
+            s_right = true;
+            select++;
+        }
+    } else
+        s_right = false;
 
-    if (c_2 == 3 && ricardo_p2_pos.x > 1280) {
-        sfSprite_setPosition(kazuya_p2->sprite, (sfVector2f){1280 + 1000, kazuya_p2_pos.y});
-        sfSprite_setPosition(ricardo_p2->sprite, (sfVector2f){ricardo_p2_pos.x -= movement_p2(ricardo_p2_pos), ricardo_p2_pos.y});
-        ((sprite_t *)scene->find_object("head_kazuya_p2", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_ricardo_p2", scene->objects))->show = true;
+    for (int i = 0; i < 4; i++) {
+        if (i != select) {
+            portrait[i]->show = false;
+            photos[i]->show = false;
+            wallpaper[i]->show = false;
+            sfSprite_setPosition(photos[i]->sprite, (sfVector2f){.x = 1920 + 150, .y = 465});
+        } else {
+            wallpaper[i]->show = true;
+            portrait[i]->show = true;
+            photos[i]->show = true;
+            sfVector2f pos = sfSprite_getPosition(photos[i]->sprite);
+            float deltaX = abs(pos.x - 1435);
+            sfSprite_setPosition_relative(photos[i]->sprite, (sfVector2f){.x = - (deltaX / 16), .y = 0});
+        }
     }
-
-    if (c_2 == 4 && van_p2_pos.x > 1280) {
-        sfSprite_setPosition(ricardo_p2->sprite, (sfVector2f){1280 + 1000, ricardo_p2_pos.y});
-        sfSprite_setPosition(van_p2->sprite, (sfVector2f){van_p2_pos.x -= movement_p2(van_p2_pos), van_p2_pos.y});
-        ((sprite_t *)scene->find_object("head_ricardo_p2", scene->objects))->show = false;
-        ((sprite_t *)scene->find_object("head_van_p2", scene->objects))->show = true;
-    }
-
-    if (c_2 == 5) c_2 = 1;
-
-    if (switch_boolean(sfKeyRight, &next_p2) == true && limiter_p2 == false) {
-        limiter_p2 = true;
-        c_2 += 1;
-    } else if (switch_boolean(sfKeyRight, &next_p2) == false) {
-        limiter_p2 = false;
-    }
+    return -1;
 }
 
 void update_scene_player_selection(scene_t *scene)
 {
-    manage_player_one_selection(scene);
-    manage_player_two_selection(scene);
+    int p1 = manage_player_one_selection(scene);
+    int p2 = manage_player_two_selection(scene);
+    if (p1 >= 0 && p2 >= 0)
+        scene_id = 2;
 }

@@ -102,37 +102,3 @@ void *find_object(const char *name, object_t *objects)
     fprintf(stderr, "trying to find %s, but it doesn't exist\n", name);
     return NULL;
 }
-
-void scene_debug(scene_t *scene)
-{
-    if (event.key.code != sfKeyEnter || event.type != sfEvtKeyReleased)
-        return;
-    sprite_t *sprite_ptr = scene->sprites;
-    printf("SCENE [ %d ]\nSPRITE: \n", scene->number);
-
-    while (sprite_ptr != NULL) {
-        printf("  - %s (show %s)\n", sprite_ptr->name, sprite_ptr->show == true ? "true": "false");
-        printf("Position: (%f - %f)\n",
-            sfSprite_getPosition(sprite_ptr->sprite).x,
-            sfSprite_getPosition(sprite_ptr->sprite).y
-        );
-        printf("Scale: (%f - %f)\n",
-            sfSprite_getScale(sprite_ptr->sprite).x,
-            sfSprite_getScale(sprite_ptr->sprite).y
-        );
-        printf("Texture rectange: (left: %d, top: %d, width: %d, height:%d)\n",
-            sfSprite_getTextureRect(sprite_ptr->sprite).left,
-            sfSprite_getTextureRect(sprite_ptr->sprite).top,
-            sfSprite_getTextureRect(sprite_ptr->sprite).width,
-            sfSprite_getTextureRect(sprite_ptr->sprite).height
-        );
-        printf("Global rectangle: (left: %f, top: %f, width: %f, height:%f)\n",
-            sfSprite_getGlobalBounds(sprite_ptr->sprite).left,
-            sfSprite_getGlobalBounds(sprite_ptr->sprite).top,
-            sfSprite_getGlobalBounds(sprite_ptr->sprite).width,
-            sfSprite_getGlobalBounds(sprite_ptr->sprite).height
-        );
-        printf("angle: %f\n\n", sfSprite_getRotation(sprite_ptr->sprite));
-        sprite_ptr = sprite_ptr->next;
-    }
-}
