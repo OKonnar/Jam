@@ -30,7 +30,7 @@ static int manage_player_one_selection(scene_t *scene)
     sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
     sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
     sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
-    char *warcry[6] = {"AWC", "FU", "IAAA", "YGMMN", "LSSD", "BITG"};
+    char *warcry[8] = {"select1", "select2", "select3", "select4", "select5", "select6", "select7", "select"};
 
     sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
     sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
@@ -41,7 +41,7 @@ static int manage_player_one_selection(scene_t *scene)
     }
     if (locked == true || sfKeyboard_isKeyPressed(sfKeySpace) || sfKeyboard_isKeyPressed(sfKeyEnter)) {
         if (!locked)
-            play_sound(warcry[rand() % 6]);
+            play_sound(warcry[rand() % 8]);
         lock_sprite->show = true;
         select_sprite->show = false;
         locked = true;
@@ -50,6 +50,7 @@ static int manage_player_one_selection(scene_t *scene)
     if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
         sfSprite_setTextureRect(left->sprite, (sfIntRect){100, 0, 100, 200});
         if (select > 0 && !s_left) {
+            play_sound("button");
             s_left = true;
             select--;
         }
@@ -58,6 +59,7 @@ static int manage_player_one_selection(scene_t *scene)
     if (sfKeyboard_isKeyPressed(sfKeyRight)) {
         sfSprite_setTextureRect(right->sprite, (sfIntRect){100, 0, 100, 200});
         if (select < 3 && !s_right) {
+            play_sound("button");
             s_right = true;
             select++;
         }
@@ -108,7 +110,7 @@ static int manage_player_two_selection(scene_t *scene)
     sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
     sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
     sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
-    char *warcry[6] = {"AWC", "FU", "IAAA", "YGMMN", "LSSD", "BITG"};
+    char *warcry[8] = {"select1", "select2", "select3", "select4", "select5", "select6", "select7", "select"};
 
     sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
     sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
@@ -119,7 +121,7 @@ static int manage_player_two_selection(scene_t *scene)
     }
     if (locked == true || sfJoystick_isButtonPressed(0, 0)) {
         if (!locked)
-            play_sound(warcry[rand() % 6]);
+            play_sound(warcry[rand() % 8]);
         lock_sprite->show = true;
         select_sprite->show = false;
         locked = true;
@@ -128,6 +130,7 @@ static int manage_player_two_selection(scene_t *scene)
     if (!trigger_threshold(sfJoystick_getAxisPosition(0, 0), -30)) {
         sfSprite_setTextureRect(left->sprite, (sfIntRect){100, 0, 100, 200});
         if (select > 0 && !s_left) {
+            play_sound("button1");
             s_left = true;
             select--;
         }
@@ -136,6 +139,7 @@ static int manage_player_two_selection(scene_t *scene)
     if (trigger_threshold(sfJoystick_getAxisPosition(0, 0), 30)) {
         sfSprite_setTextureRect(right->sprite, (sfIntRect){100, 0, 100, 200});
         if (select < 3 && !s_right) {
+            play_sound("button1");
             s_right = true;
             select++;
         }
@@ -167,8 +171,10 @@ void update_scene_player_selection(scene_t *scene)
     int p2 = manage_player_two_selection(scene);
     int p1 = manage_player_one_selection(scene);
 
-    if (frames > FPS * 2)
+    if (frames > FPS * 2) {
+        play_sound("button2");
         scene_id++;
+    }
     if (!locked && p1 >= 0 && p2 >= 0) {
         locked = true;
     } else if (p1 < 0 || p2 < 0)

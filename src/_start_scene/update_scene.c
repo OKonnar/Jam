@@ -11,7 +11,9 @@ void update_menu_scene(scene_t *scene)
     update_rect(play_button->sprite, (int[1]){11}, 16);
 
     if (sfSprite_getTextureRect(intro->sprite).left > 60 * 285) {
-        scene_id = 1;
+        scene_id++;
+        play_sound("button2");
+        play_sound("theme");
         return;
     }
     if (space_pressed && frame_counter > (float)FPS / 15) {
@@ -21,7 +23,7 @@ void update_menu_scene(scene_t *scene)
     }
 
     if (!space_pressed && sfKeyboard_isKeyPressed(sfKeySpace)) {
-        play_sound("cockz");
+        play_sound("intro");
         sfSprite_setTextureRect(intro->sprite, (sfIntRect){0, 0, 285, 160});
         play_button->show = false;
         intro->show = true;

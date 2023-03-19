@@ -8,8 +8,12 @@ void init_menu_scene(scene_manager_t *manager)
     sfSprite *play_button = scene->add_sprite("play_button", "./assets/sprites/press_to_start.png", &scene, &(sfIntRect){0, 0, 507, 54}, NONE);
     sprite_t *_intro = (sprite_t *)scene->find_object("intro", scene->objects);
 
-    add_sound("./assets/sounds/cockZ.wav", "cockz");
-    sfSound_setVolume(get_sound("cockz"), 100);
+    add_sound("./assets/sounds/intro.wav", "intro");
+    add_sound("./assets/sounds/button.wav", "button");
+    add_sound("./assets/sounds/button1.wav", "button1");
+    add_sound("./assets/sounds/button2.wav", "button2");
+    add_sound("./assets/sounds/kazuya_theme.wav", "theme");
+    sfSound_setLoop(get_sound("theme"), true);
     _intro->show = false;
     sfSprite_setOrigin(intro, (sfVector2f){285 / 2, 160 / 2});
     sfSprite_setPosition(intro, (sfVector2f){1920 / 2, 1080 - (80 * 7)});

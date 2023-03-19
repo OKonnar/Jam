@@ -5,12 +5,14 @@ void init_scene_player_selection(scene_manager_t *manager)
     scene_t *scene = manager->create_scene(&manager);
 
 
-    add_sound("assets/sounds/Ass_we_can.wav", "AWC");
-    add_sound("assets/sounds/Boss_in_this_gym.wav", "BITG");
-    add_sound("assets/sounds/Lets_suck_some_dick.wav", "LSSD");
-    add_sound("assets/sounds/fuck_you_van.wav", "FU");
-    add_sound("assets/sounds/you_got_me_mad_now.wav", "YGMMN");
-    add_sound("assets/sounds/Iam_an_artist.wav", "IAAA");
+    add_sound("assets/sounds/select.wav", "select");
+    add_sound("assets/sounds/select1.wav", "select1");
+    add_sound("assets/sounds/select2.wav", "select2");
+    add_sound("assets/sounds/select3.wav", "select3");
+    add_sound("assets/sounds/select4.wav", "select4");
+    add_sound("assets/sounds/select5.wav", "select5");
+    add_sound("assets/sounds/select6.wav", "select6");
+    add_sound("assets/sounds/select7.wav", "select7");
     sfSprite_setPosition(scene->add_sprite("head_billy_p1", "./assets/sprites/billy-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
     sfSprite_setPosition(scene->add_sprite("head_kazuya_p1", "./assets/sprites/kazuya-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
     sfSprite_setPosition(scene->add_sprite("head_ricardo_p1", "./assets/sprites/ricardo-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
@@ -29,7 +31,6 @@ void init_scene_player_selection(scene_manager_t *manager)
     sfSprite_setPosition(scene->add_sprite("r_arr_p2", "./assets/sprites/select_arrow_r.png", &scene, &(sfIntRect){0, 0, 100, 200}, NONE), (sfVector2f){1560, 795});
     sfSprite_setPosition(scene->add_sprite("l_arr_p1", "./assets/sprites/select_arrow_l.png", &scene, &(sfIntRect){0, 0, 100, 200}, NONE), (sfVector2f){250, 795});
     sfSprite_setPosition(scene->add_sprite("l_arr_p2", "./assets/sprites/select_arrow_l.png", &scene, &(sfIntRect){0, 0, 100, 200}, NONE), (sfVector2f){1220, 795});
-
 
 
     sfSprite_setOrigin(scene->add_sprite("billy_p1", "./assets/sprites/billy.png", &scene,  NULL, NONE), (sfVector2f){150, 250});
