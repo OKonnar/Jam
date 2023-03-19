@@ -5,6 +5,8 @@ sfClock *daclock;
 sfEvent event;
 sounds_t *sounds;
 int scene_id;
+int sp_p1;
+int sp_p2;
 
 static void init_game_elements()
 {
@@ -12,6 +14,8 @@ static void init_game_elements()
     window = window_change(NULL, (sfVideoMode){1920, 1080, 32}, sfResize | sfClose);
     sounds = NULL;
     scene_id = 0;
+    sp_p1 = 0;
+    sp_p2 = 0;
 }
 
 static scene_manager_t *init_scene_manager()

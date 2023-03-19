@@ -30,7 +30,7 @@ static int manage_player_one_selection(scene_t *scene)
     sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
     sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
     sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
-    char *warcry[8] = {"select1", "select2", "select3", "select4", "select5", "select6", "select7", "select"};
+    char *warcry[11] = {"select1", "select2", "select3", "select4", "select5", "select6", "select7", "select", "select8", "select9", "select10"};
 
     sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
     sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
@@ -41,7 +41,7 @@ static int manage_player_one_selection(scene_t *scene)
     }
     if (locked == true || sfKeyboard_isKeyPressed(sfKeySpace) || sfKeyboard_isKeyPressed(sfKeyEnter)) {
         if (!locked)
-            play_sound(warcry[rand() % 8]);
+            play_sound(warcry[rand() % 11]);
         lock_sprite->show = true;
         select_sprite->show = false;
         locked = true;
@@ -110,7 +110,7 @@ static int manage_player_two_selection(scene_t *scene)
     sprite_t *photos[4] = {billy_p1, kazuya_p1, ricardo_p1, van_p1};
     sprite_t *portrait[4] = {head_billy, head_kazuya, head_ricardo, head_van};
     sprite_t *wallpaper[4] = {billy_b, kazuya_b, ricardo_b, van_b};
-    char *warcry[8] = {"select1", "select2", "select3", "select4", "select5", "select6", "select7", "select"};
+    char *warcry[11] = {"select1", "select2", "select3", "select4", "select5", "select6", "select7", "select", "select8", "select9", "select10"};
 
     sfSprite_setTextureRect(right->sprite, (sfIntRect){0, 0, 100, 200});
     sfSprite_setTextureRect(left->sprite, (sfIntRect){0, 0, 100, 200});
@@ -121,7 +121,7 @@ static int manage_player_two_selection(scene_t *scene)
     }
     if (locked == true || sfJoystick_isButtonPressed(0, 0)) {
         if (!locked)
-            play_sound(warcry[rand() % 8]);
+            play_sound(warcry[rand() % 11]);
         lock_sprite->show = true;
         select_sprite->show = false;
         locked = true;
@@ -173,6 +173,8 @@ void update_scene_player_selection(scene_t *scene)
 
     if (frames > FPS * 2) {
         play_sound("button2");
+        sp_p1 = p1;
+        sp_p2 = p2;
         scene_id++;
     }
     if (!locked && p1 >= 0 && p2 >= 0) {

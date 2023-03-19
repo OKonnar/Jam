@@ -13,6 +13,9 @@ void init_scene_player_selection(scene_manager_t *manager)
     add_sound("assets/sounds/select5.wav", "select5");
     add_sound("assets/sounds/select6.wav", "select6");
     add_sound("assets/sounds/select7.wav", "select7");
+    add_sound("assets/sounds/select8.wav", "select8");
+    add_sound("assets/sounds/select9.wav", "select9");
+    add_sound("assets/sounds/select10.wav", "select10");
     sfSprite_setPosition(scene->add_sprite("head_billy_p1", "./assets/sprites/billy-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
     sfSprite_setPosition(scene->add_sprite("head_kazuya_p1", "./assets/sprites/kazuya-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});
     sfSprite_setPosition(scene->add_sprite("head_ricardo_p1", "./assets/sprites/ricardo-head.png", &scene, NULL, NONE), (sfVector2f){380, 800});

@@ -16,10 +16,10 @@ void face_each_other(sfSprite *p1, sfSprite *p2)
     }
 }
 
-void put_marker_on_top(scene_t *scene)
+void put_marker_on_top(scene_t *scene, sprite_t *p1, sprite_t *p2)
 {
-    sfVector2f player1_pos = sfSprite_getPosition(((sprite_t *)scene->find_object("player1", scene->objects))->sprite);
-    sfVector2f player2_pos = sfSprite_getPosition(((sprite_t *)scene->find_object("player2", scene->objects))->sprite);
+    sfVector2f player1_pos = sfSprite_getPosition(p1->sprite);
+    sfVector2f player2_pos = sfSprite_getPosition(p2->sprite);
     sfSprite *marker1 = ((sprite_t *)scene->find_object("marker1", scene->objects))->sprite;
     sfSprite *marker2 = ((sprite_t *)scene->find_object("marker2", scene->objects))->sprite;
 
@@ -54,8 +54,10 @@ int do_attack(sfSprite *sprite_A, sfSprite *sprite_D, int range, int damages)
     sfVector2f Apos = sfSprite_getPosition(sprite_A);
     sfVector2f Dpos = sfSprite_getPosition(sprite_D);
 
-    if (abs(Apos.x - Dpos.x) < range + 25)
+    if (abs(Apos.x - Dpos.x) < range + 25 && Dpos.y > 750) {
+        printf("Y = %.1f\t%.1f\n", Dpos.y, Apos.y);
         return damages;
+    }
     return 0;
 }
 
@@ -75,11 +77,37 @@ int process_attack(int *frames, bool *attack, sfSprite *sp1, sfSprite *sp2, int 
     return 0;
 }
 
-void player_one(scene_t *scene)
+void update_head(sprite_t *baby)
 {
-    sprite_t *player = (sprite_t *)scene->find_object("player1", scene->objects);
-    sprite_t *target = (sprite_t *)scene->find_object("player2", scene->objects);
+    static int i = 0;
+    int p = sfSprite_getTextureRect(baby->sprite).left + 367;
+
+    i++;
+    if (i == FPS / 40) {
+        i = 0;
+        p = p == 12845 ? 0 : p;
+        sfSprite_setTextureRect(baby->sprite, (sfIntRect) {p, 0, 367, 360});
+    }
+}
+
+void death(sfSprite *sprite)
+{
+    static int i = 0;
+    static int p = 0;
+
+    i++;
+    if (i == FPS / 8 && p < 240) {
+        sfSprite_setTextureRect(sprite, (sfIntRect) {p, 120, 30, 40});
+        i = 0;
+        p += 30;
+    }
+}
+
+void player_one(scene_t *scene, sprite_t *player, sprite_t *target)
+{
     sprite_t *life = (sprite_t *)scene->find_object("hbr", scene->objects);
+    sprite_t *win = (sprite_t *)scene->find_object("win", scene->objects);
+    sprite_t *winner = (sprite_t *)scene->find_object("winner", scene->objects);
     static bool right = false;
     static bool left = false;
     static bool jump = false;
@@ -90,15 +118,26 @@ void player_one(scene_t *scene)
     static int attackdelay = 0;
     static int hp = 100;
 
-    char *warcry[10] = {"hit1", "hit2", "hit3", "hit4", "hit5", "hit6", "hit7", "hit8", "hit9", "hit"};
-    char *hit[4] = {"slap1", "slap2", "slap3", "slap"};
+    char *warcry[11] = {"hit1", "hit2", "hit3", "hit4", "hit5", "hit6", "hit7", "hit8", "hit9", "hit", "hit10"};
+    char *hit[5] = {"slap1", "slap2", "slap3", "slap", "slap4"};
 
-    if (hp <= 0)
+    if (hp <= 0) {
+        if (winner->show == false) {
+            win->show = true;
+            winner->show = true;
+        }
+        sfSprite_setPosition(winner->sprite, sfSprite_getPosition(target->sprite));
+        death(player->sprite);
         return;
+    }
+    if (winner->show == true) {
+        win->show = false;
+        winner->show = false;
+    }
     attackdelay++;
     update_rect(player->sprite, (int[6]){7, 10, 5, 8, 1, 6}, attack == true ? 10 : 8);
     if (scene->event_trigger[0] > 0) {
-        play_sound(warcry[rand() % 10]);
+        play_sound(warcry[rand() % 11]);
         if (guard)
             hp -= 3;
         else
@@ -108,7 +147,7 @@ void player_one(scene_t *scene)
     }
     if (attack == true) {
         if (process_attack(&attackFrames, &attack, player->sprite, target->sprite, 75, 10) > 0) {
-            play_sound(hit[rand() % 4]);
+            play_sound(hit[rand() % 5]);
             scene->event_trigger[1] = 10;
         }
         right = false;
@@ -161,11 +200,11 @@ void player_one(scene_t *scene)
     }
 }
 
-void player_two(scene_t *scene)
+void player_two(scene_t *scene, sprite_t *player, sprite_t *target)
 {
-    sprite_t *player = (sprite_t *)scene->find_object("player2", scene->objects);
-    sprite_t *target = (sprite_t *)scene->find_object("player1", scene->objects);
     sprite_t *life = (sprite_t *)scene->find_object("hbl", scene->objects);
+    sprite_t *winner = (sprite_t *)scene->find_object("winner", scene->objects);
+    sprite_t *win = (sprite_t *)scene->find_object("win", scene->objects);
     static bool right = false;
     static bool left = false;
     static bool jump = false;
@@ -176,16 +215,27 @@ void player_two(scene_t *scene)
     static int attackdelay = 0;
     static int hp = 100;
 
-    char *warcry[10] = {"hit1", "hit2", "hit3", "hit4", "hit5", "hit6", "hit7", "hit8", "hit9", "hit"};
-    char *hit[4] = {"slap1", "slap2", "slap3", "slap"};
+    char *warcry[11] = {"hit1", "hit2", "hit3", "hit4", "hit5", "hit6", "hit7", "hit8", "hit9", "hit", "hit10"};
+    char *hit[5] = {"slap1", "slap2", "slap3", "slap", "slap4"};
 
 
-    if (hp <= 0)
+    if (hp <= 0) {
+        if (winner->show == false) {
+            win->show = true;
+            winner->show = true;
+        }
+        sfSprite_setPosition(winner->sprite, sfSprite_getPosition(target->sprite));
+        death(player->sprite);
         return;
+    }
+    if (winner->show == true) {
+        win->show = false;
+        winner->show = false;
+    }
     attackdelay++;
     update_rect(player->sprite, (int[6]){7, 10, 5, 8, 1, 6}, attack == true ? 10 : 8);
     if (scene->event_trigger[1] > 0) {
-        play_sound(warcry[rand() % 10]);
+        play_sound(warcry[rand() % 11]);
         if (guard)
             hp -= 3;
         else
@@ -206,7 +256,7 @@ void player_two(scene_t *scene)
     if (attack == true) {
         if (process_attack(&attackFrames, &attack, player->sprite, target->sprite, 75, 10) > 0) {
             scene->event_trigger[0] = 10;
-            play_sound(hit[rand() % 4]);
+            play_sound(hit[rand() % 5]);
         }
         right = false;
         left = false;
@@ -257,24 +307,21 @@ void player_two(scene_t *scene)
     }
 }
 
-void update_head(sprite_t *baby)
-{
-    static int i = 0;
-    int p = sfSprite_getTextureRect(baby->sprite).left + 367;
-
-    i++;
-    if (i == 4) {
-        i = 0;
-        p = p == 12845 ? 0 : p;
-        sfSprite_setTextureRect(baby->sprite, (sfIntRect) {p, 0, 367, 360});
-    }
-}
-
 void update_fight_scene(scene_t *scene)
 {
-    put_marker_on_top(scene);
-    face_each_other(((sprite_t *)scene->find_object("player1", scene->objects))->sprite , ((sprite_t *)scene->find_object("player2", scene->objects))->sprite);
-    player_one(scene);
-    player_two(scene);
+    char *p[4] = {"b2", "k2", "r2", "v2"};
+    char *t[4] = {"b1", "k1", "r1", "v1"};
+    sprite_t *p1 = (sprite_t *)scene->find_object(t[sp_p1], scene->objects);
+    sprite_t *p2 = (sprite_t *)scene->find_object(p[sp_p2], scene->objects);
+    for (int i = 0; i < 4; i++) {
+        if (i != sp_p1)
+            ((sprite_t *)scene->find_object(t[i], scene->objects))->show = false;
+        if (i != sp_p2)
+            ((sprite_t *)scene->find_object(p[i], scene->objects))->show = false;
+    }
+    put_marker_on_top(scene, p1, p2);
+    face_each_other(p1->sprite, p2->sprite);
+    player_one(scene, p1, p2);
+    player_two(scene, p2, p1);
     update_head(((sprite_t *)scene->find_object("baby", scene->objects)));
 }

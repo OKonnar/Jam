@@ -4,7 +4,7 @@ void sfSprite_setPosition_relative(sfSprite *sprite , sfVector2f new_pos)
 {
     sfVector2f initial_pos = sfSprite_getPosition(sprite);
     sfVector2f final_pos = {
-        .x = initial_pos.x + new_pos.x,
+        .x = (initial_pos.x + new_pos.x < 0 || initial_pos.x + new_pos.x > 1920) && initial_pos.x < 1920 ? 0: initial_pos.x + new_pos.x,
         .y = initial_pos.y + new_pos.y
     };
     sfSprite_setPosition(sprite, final_pos);

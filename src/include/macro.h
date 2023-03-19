@@ -24,6 +24,9 @@ extern sfClock *daclock;
 extern sfEvent event;
 extern sounds_t *sounds;
 extern int scene_id;
+extern int sp_p1;
+extern int sp_p2;
+
 
 enum cursor_trigger {
     NONE,
